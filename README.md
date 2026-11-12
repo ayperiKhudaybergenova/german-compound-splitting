@@ -1,90 +1,133 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/5KNnuYIl)
-# Assignment 3: Segmentation (Sequence Labeling)
+# German Compound Splitting: NLP & Sequence Labeling
 
-**Deadline:** Jul 25, 2025
+A Natural Language Processing (NLP) project focused on German compound word segmentation using character-level sequence labeling and machine learning.
 
-This assignment is on segmentation, a common task in NLP.
-In particular, the problem we are solving is
-"compound splitting" for German.
+The project explores how machine learning models can identify morphological boundaries within German compound words by analyzing character-level patterns and contextual information.
 
-As before, you can find the data in your repository as two separate files.
-The file [nlp2-a3.train](nlp2-a3.train) contain the training instances,
-and the file [nlp2-a3.test](nlp2-a3.test) contains the test instances.
-Both files contain a single word per line.
-The training data contains parts of the compounds delimited with spaces.
-Your task is inserting the spaces between the components of compound
-words in the test file using a machine learning method.
-The data comes from an earlier study
-[(Ma et al.  2016)](https://aclanthology.org/W16-2012).
-Although the data set is known to have some (systematic) errors,
-we will use it as is,
-and you are not recommended to fix the errors in the training set
-(the test set has the same errors).
+## Project Overview
 
-You are allowed to use any additional unlabeled / unsegmented data.
-However, you are not allowed to use any data set particularly
-prepared for German compound splitting.
+German is well known for its productive compound word formation, where multiple words are combined to create a single complex word.
 
-A common approach to supervised segmentation is formulating it as
-a sequence labeling task where we label each character as
-'**B**: beginning of a unit' (in our case units are _morph_s)
-and '**I**: inside a unit'.
-For example, an example input and output pair for the classifier can be:
+For example:
 
-```
-input:  computerlinguistik
-output: BIIIIIIIBIIIIIIIII
-```
+- `Donaudampfschifffahrt` → `Donau dampf schiff fahrt`
+- `Computerlinguistik` → `Computer linguistik`
 
-In some problems it is also useful to introduce another class,
-'**O**: outside a unit'.
-As a result this approach is often called 'B/I/O' segmentation.
-This is a common approach for a wide range of NLP tasks from
-tokenization to named-entity recognition (sometimes with additional labels).
-Note that even though we are classifying the individual characters,
-the context and other decisions in the sequence matters.
-Hence, it is a common practice to use methods for sequence prediction
-for this problem.
+Automatically identifying these boundaries is an important NLP task with applications in tokenization, morphological analysis, and text processing.
 
-If you follow this approach,
-a substantial part of your code will be converting the input into a format
-that can be fed to the ML algorithm,
-and then convert the predictions back to a readable format.
+**Objective:** Develop machine learning approaches to identify and predict segmentation boundaries in German compound words.
 
-For our relatively simplified problem,
-you can potentially get good results using standard classifiers
-attending to a fixed context.
-However, you are recommended to try (multiple) methods of sequence learning
-for this assignment.
+## Technical Skills & Technologies
 
-## Submission information
+- **Programming:** Python
+- **Natural Language Processing:** German text processing, morphological segmentation
+- **Machine Learning:** Sequence labeling, character-level classification
+- **Feature Engineering:** Character-level contextual features
+- **Sequence Labeling:** B/I tagging (Beginning / Inside)
+- **Libraries:** Scikit-learn, NumPy, Pandas
+- **Development:** Git, GitHub
 
-As in previous assignments, you are required to submit your predictions
-as a text file. The predictions file for this experiment is similar to
-the training file, where each line contains a word from the test file,
-and if the word is a compound, a single space character should be
-inserted between the parts of the word.
-For the example above, the prediction file should contain
-a line like the following.
+## Methodology
 
-```
-computer linguistik
+The segmentation problem can be formulated as a character-level sequence labeling task.
+
+Each character receives a label indicating whether it begins a new morphological unit or belongs to an existing unit.
+
+- **B (Beginning):** Beginning of a morphological unit.
+- **I (Inside):** Character inside a morphological unit.
+
+For example:
+
+```text
+Input:  computerlinguistik
+Labels: BIIIIIIIBIIIIIIIII
+Output: computer linguistik
 ```
 
-The filename for the predictions file should be like `a3-<method>.predictions`,
-where, `<method>` is a (short) string that identifies your approach.
-The method name you use for the file will be visible on the scoreboard
-(see below).
-You are recommended to use understandable method names.
-For example, if your method is based on a recurrent network,
-`rnn` may be a good choice.
-You are encouraged to submit multiple sets of predictions.
+The predicted character labels are converted back into segmented compound words by inserting spaces at the identified boundaries.
 
-For each approach, the main Python script should be named `a3-<method>.py`.
-You are free to structure your code as multiple files
-(and share code across different approaches).
-However, the main file for each approach should be named as instructed above.
+## Machine Learning Approaches
 
-Unlike previous assignments, we do not provide a baseline.
-You are strongly recommended to make use of the lab sessions
-where examples solution (for similar tasks) will be provided.
+The project explores supervised learning methods for character-level sequence prediction.
+
+Potential approaches include:
+
+- Character-level contextual feature extraction
+- Fixed-window classification
+- Sequence labeling models
+- Conditional Random Fields (CRF)
+- Recurrent Neural Networks (RNN/LSTM)
+- Model comparison and optimization
+
+## Dataset
+
+The project uses a German compound segmentation dataset based on the study by Ma et al. (2016).
+
+The dataset contains:
+
+- Training examples with compound words and their segmentation boundaries
+- Test examples containing unsegmented German words
+
+Additional unlabeled German text data may be used, subject to the assignment restrictions.
+
+## Project Structure
+
+```text
+german-compound-splitting/
+│
+├── nlp2-a3.train
+├── nlp2-a3.test
+├── a3-<method>.py
+├── a3-<method>.predictions
+├── README.md
+└── .gitignore
+```
+
+## Running the Project
+
+Install the required dependencies:
+
+```bash
+pip install numpy pandas scikit-learn
+```
+
+Run a segmentation model:
+
+```bash
+python a3-<method>.py
+```
+
+The script generates a prediction file containing segmented German compound words.
+
+## Applications
+
+German compound splitting is relevant to:
+
+- Natural Language Processing pipelines
+- Text preprocessing and tokenization
+- Morphological analysis
+- Information retrieval
+- Machine translation
+- Search engine optimization for morphologically complex languages
+
+## Learning Outcomes
+
+This project demonstrates practical experience with:
+
+- Character-level text processing
+- Morphological segmentation
+- Sequence labeling
+- Supervised machine learning
+- Context-based feature engineering
+- Converting classification outputs into structured text
+- German language processing
+
+## Academic Context
+
+Originally developed as part of a university assignment in Statistical Natural Language Processing (SNLP).
+
+The repository has been organized as a portfolio project to demonstrate practical NLP, sequence modeling, and machine learning skills.
+
+---
+
+**Technologies:** Python · NLP · Sequence Labeling · Machine Learning · German Language Processing
